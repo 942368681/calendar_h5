@@ -1,0 +1,12 @@
+.navBar {
+    height: 0.88rem;
+    border: 1px solid #999;
+    margin-bottom: 0.1rem;
+    line-height: 0.88rem;
+    text-align: center;
+    padding: 0 0.2rem;
+}
+.navBar>span {
+    height: 0.88rem;
+    float: left;
+}
