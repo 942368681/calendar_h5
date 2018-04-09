@@ -18,34 +18,12 @@ class Calendar extends Component {
     };
     componentDidMount = () => {
         this.init();
-        window.addEventListener('scroll', this.onScroll);
     };
     componentWillReceiveProps = (nextProps) => {
         this.addMark(nextProps);
     };
     appendZero = (n) => {
         return n >= 10 ? ('' + n) : ('0' + n);
-    };
-    onScroll = () => {
-        if (document.body.scrollTop >= 60 || document.documentElement.scrollTop >= 60) {
-            let calendarBox = document.getElementsByClassName(calendarStyle.content)[0];
-            let daysActive = document.getElementsByClassName(calendarStyle.daysActive)[0];
-            let head = document.getElementsByClassName(calendarStyle.head)[0];
-            let dateList = document.getElementsByClassName(calendarStyle.dateList)[0];
-            let todoList = document.getElementById('todoList');
-            calendarBox.style.position = "fixed";
-            calendarBox.style.top = -0.32 + "rem";
-            head.style.position = "relative";
-            head.style.zIndex = 2;
-            dateList.style.position = "relative";
-            dateList.style.top = -daysActive.offsetTop + "px";
-            dateList.style.height = daysActive.clientHeight + daysActive.offsetTop + "px";
-            calendarBox.style.height = 2.6 + "rem";
-            todoList.style.position = "fixed";
-            todoList.style.top = calendarBox.clientHeight + "px";
-            todoList.children[0].style.height = 10.4 + "rem";
-            todoList.children[0].style.overflowY = "auto"; 
-        };
     };
     init = () => {
         let date = new Date();
