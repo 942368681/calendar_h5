@@ -25,6 +25,7 @@
     align-items: center;
     flex-wrap: wrap;
     color: #000;
+    font-size: 0.32rem;
 }
 .week>li {
     width: 0.74rem;
@@ -42,6 +43,7 @@
     overflow: hidden;
     background: #fff;
     position: relative;
+    font-size: 0.32rem;
 }
 .days {
     width: 0.74rem;
@@ -73,7 +75,7 @@
     display: none;
 }
 .dateLine {
-    font-size: 0.36rem;
+    font-size: 0.4rem;
     color: #000;
 }
 .days>.showIt {

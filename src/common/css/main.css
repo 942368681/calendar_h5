@@ -22,7 +22,7 @@ img{
     display: block;
 }
 body{
-    font-size: 0.32rem;
+    font-size: 0.32rem !important;
     padding-top: 0.88rem;
     background: #f6f6f6 !important;
 }
@@ -35,15 +35,22 @@ body{
     width: 100%;
     z-index: 999;
 }
+.navBar .am-navbar-title {
+    font-size: 0.4rem;
+}
 .navBar>.am-navbar {
     height: 0.88rem;
+}
+.am-navbar-left span {
+    font-size: 0.36rem;
 }
 .am-navbar-right a{
     height: 0.88rem;
     line-height: 0.88rem;
-    width: 0.6rem;
+    width: 0.64rem;
     color: #fff;
     text-align: center;
+    font-size: 0.36rem;
 }
 .am-navbar>.am-navbar-right {
     margin-right: 0.1rem;

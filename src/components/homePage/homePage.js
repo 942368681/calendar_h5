@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {
-    HashRouter as Router,
-    Route,
-    Link,
-    Switch
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { NavBar } from 'antd-mobile';
-import axios from 'axios';
-import '../../mock/mock.js';
-import Calendar from './calendar/calendar.js';
-import TodoList from './todoList/todoList.js';
+import '../../mock/mock';
+import Calendar from './calendar/calendar';
+import TodoList from './todoList/todoList';
 
 import homePageStyle from './homePage.css';
 import calendarStyle from './calendar/calendar.css';
@@ -19,7 +13,7 @@ class HomePage extends Component {
     constructor() {
         super();
         this.state = {
-            todoList: []
+            
         };
         this.calendarBox = null;
         this.daysActive = null;
@@ -28,7 +22,6 @@ class HomePage extends Component {
         this.disY = null;
     };
     componentDidMount = () => {
-        this.getTodoList();
         this.calendarBox = document.getElementsByClassName(calendarStyle.content)[0];
         this.daysActive = document.getElementsByClassName(calendarStyle.daysActive)[0];
         this.dateList = document.getElementsByClassName(calendarStyle.dateList)[0];
@@ -45,20 +38,20 @@ class HomePage extends Component {
             this.calendarBox.style.height = 2.6 + "rem";
             this.todoList.style.position = "fixed";
             this.todoList.style.top = this.calendarBox.clientHeight + "px";
-            this.todoList.style.maxHeight = 9 + "rem";
+            this.todoList.style.height = (window.innerHeight - parseFloat(getComputedStyle(this.todoList).top)) + "px";
             this.todoList.style.overflowY = "auto"; 
-            this.todoList.addEventListener('touchstart', this.todoListTouch);
+            window.addEventListener('touchstart', this.windowTouch);
         };
     };
-    todoListTouch = () => {
+    windowTouch = () => {
         let ev = event || window.event;
         if (ev.touches.length == 1) {
             this.disY = ev.touches[0].pageY;
-            this.todoList.addEventListener('touchmove', this.todoListMove);
+            window.addEventListener('touchmove', this.windowMove);
         }
     };
-    todoListMove = () => {
-        if (document.getElementById('todoList').scrollTop <= 0) {
+    windowMove = () => {
+        if (this.todoList.scrollTop <= 0) {
             let ev = event || window.event;
             if(ev.touches[0].pageY - this.disY > 100) {
                 this.calendarBox.removeAttribute('style');
@@ -69,23 +62,12 @@ class HomePage extends Component {
                 this.todoList.removeAttribute('style');
                 this.todoList.removeAttribute('style');
                 this.todoList.removeAttribute('style');
-                this.todoList.removeEventListener('touchstart', this.todoListTouch);
-                this.todoList.removeEventListener('touchmove', this.todoListMove);
+                window.removeEventListener('touchstart', this.windowTouch);
+                window.removeEventListener('touchmove', this.windowMove);
             }
         }
     }; 
-    getTodoList = () => {
-        let self = this;
-        axios.get('http://data/todoList')
-        .then((response) => {
-            self.setState({
-                todoList: response.data.list
-            });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    };
+    
     goBack = () => {
         this.props.history.goBack();
     };
@@ -97,7 +79,6 @@ class HomePage extends Component {
                         mode="dark"
                         leftContent={[<span key="0" className="iconfont icon-back"></span>]}
                         rightContent={[
-                            <Link to='/search' key="0" data-type="search" className="iconfont icon-search"></Link>,
                             <Link to='/add' key="1" data-type="add" className="iconfont icon-add"></Link>,
                             <Link to='/set' key="2" data-type="set" className="iconfont icon-set"></Link>
                         ]}
@@ -106,8 +87,8 @@ class HomePage extends Component {
                         日程
                     </NavBar>
                 </div>
-                <Calendar todoData = { this.state.todoList } getTodoList = { this.getTodoList } />
-                <TodoList todoData = { this.state.todoList } />
+                <Calendar />
+                <TodoList />
             </div>
         );
     };

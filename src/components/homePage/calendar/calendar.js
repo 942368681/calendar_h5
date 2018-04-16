@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
+import { getCalendar, getData } from '../../../actions';
+import { Toast } from 'antd-mobile';
+import axios from 'axios';
 import calendarStyle from './calendar.css';
+
+const mapStateToProps = state => ({
+    calendar: state.calendar,
+    datas: state.datas
+});
+const mapDispatchToProps = dispatch => ({
+    getCalendar: calendarArr => dispatch(getCalendar(calendarArr)),
+    getData: dataArr => dispatch(getData(dataArr))
+});
 
 class Calendar extends Component {
     constructor() {
         super();
         this.state = {
-            dateList: []
+            
         };
         this.monthIndex = 0;
         this.dateText = "";
@@ -24,6 +37,20 @@ class Calendar extends Component {
     };
     appendZero = (n) => {
         return n >= 10 ? ('' + n) : ('0' + n);
+    };
+    getTodoList = () => {
+        let self = this;
+        Toast.loading('Loading...', 5, () => {
+            Toast.offline('请求超时', 1);
+        });
+        axios.get('http://data/todoList')
+        .then((response) => {
+            Toast.hide();
+            self.props.getData(response.data.list);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     };
     init = () => {
         let date = new Date();
@@ -86,16 +113,15 @@ class Calendar extends Component {
                 </li>
             );
         }
-        this.setState({
-            dateList: arr
-        });
+        this.props.getCalendar(arr);
+        this.getTodoList();
     };
     addMark = (nextProps) => {
-        let { todoData } = nextProps;
+        let { datas } = nextProps;
         let marksArr = document.getElementsByClassName(calendarStyle.marks);
         Array.from(marksArr).forEach((e, i) => {
             let dateline = e.dataset.dataline;
-            if (todoData.some((item) => { return item.dateline == this.dateline + this.appendZero(i+1) })) {
+            if (datas.some((item) => { return item.dateline == this.dateline + this.appendZero(i+1) })) {
                 e.classList.add(calendarStyle.showIt);
             } else {
                 e.classList.remove(calendarStyle.showIt);
@@ -109,7 +135,6 @@ class Calendar extends Component {
             this.monthIndex++;
         }
         this.init();
-        this.props.getTodoList();
     };
     chooseDay = (ev) => {
         let index = ev.currentTarget.dataset.index;
@@ -135,11 +160,11 @@ class Calendar extends Component {
                     </ol>
                 </div>
                 <div className={ calendarStyle.dateList }>
-                    { this.state.dateList }
+                    { this.props.calendar }
                 </div>
 	        </div>
         );
     };
 };
 
-export default Calendar;
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
