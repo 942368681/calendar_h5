@@ -15,5 +15,7 @@
 	doc.addEventListener('DOMContentLoaded', recalc, false);
 })(document, window);
 
-
+export const appendZero = (n) => {
+    return n >= 10 ? ('' + n) : ('0' + n);
+};
 

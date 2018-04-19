@@ -3,7 +3,13 @@ export const getData = dataArr => ({
     dataArr
 });
 
-export const getCalendar = calendarArr => ({
+export const getCalendar = (calendarArr, dateNow) => ({
     type: 'GET_CALENDAR',
-    calendarArr
+    calendarArr,
+    dateNow
+});
+
+export const changeAddPage = addState => ({
+    type: 'CHANGE_ADD',
+    addState
 });

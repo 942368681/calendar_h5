@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getCalendar, getData } from '../../../actions';
 import { SwipeAction, Toast } from 'antd-mobile';
 import axios from 'axios';
 import todoListStyle from './todoList.css';
-
-const mapStateToProps = state => ({
-    datas: state.datas
-});
-const mapDispatchToProps = dispatch => ({
-    getData: dataArr => dispatch(getData(dataArr))
-});
 
 class TodoList extends Component {
     constructor() {
@@ -27,6 +18,7 @@ class TodoList extends Component {
     };
     init = (nextProps) => {
         let { datas } = nextProps;
+        console.log(datas)
         let arr = [];
         datas.forEach((e, i) => {
             arr.push(
@@ -46,13 +38,16 @@ class TodoList extends Component {
                     ]}
                 >
                     <li className={ todoListStyle.listItem } onClick={ this.checkDetail }>
-                        <Link to='/detail'>
+                        <Link to={{
+                            pathname: '/detail',
+                            state: { id: e.todoID }
+                        }}>
                             <div className={ todoListStyle.listItemL }>
                                 <span className="iconfont icon-richenganpai"></span>
                             </div>
                             <div className={ todoListStyle.listItemR }>
-                                <p>{ e.startDate + ' - ' + e.endDate }</p>
-                                <p>{ e.workName }</p>
+                                <p>{ e.startDate + ' ' + e.timeStart + ' - ' + e.endDate + ' ' + e.timeEnd }</p>
+                                <p>{ e.textVal }</p>
                             </div>
                         </Link>
                     </li>
@@ -92,4 +87,4 @@ class TodoList extends Component {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export default TodoList;

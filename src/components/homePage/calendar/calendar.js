@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
-import { getCalendar, getData } from '../../../actions';
 import { Toast } from 'antd-mobile';
 import axios from 'axios';
+import { appendZero } from '../../../common/js/common';
 import calendarStyle from './calendar.css';
-
-const mapStateToProps = state => ({
-    calendar: state.calendar,
-    datas: state.datas
-});
-const mapDispatchToProps = dispatch => ({
-    getCalendar: calendarArr => dispatch(getCalendar(calendarArr)),
-    getData: dataArr => dispatch(getData(dataArr))
-});
 
 class Calendar extends Component {
     constructor() {
@@ -33,10 +23,9 @@ class Calendar extends Component {
         this.init();
     };
     componentWillReceiveProps = (nextProps) => {
-        this.addMark(nextProps);
-    };
-    appendZero = (n) => {
-        return n >= 10 ? ('' + n) : ('0' + n);
+        if (nextProps.calendar.length) {
+            this.addMark(nextProps);
+        }
     };
     getTodoList = () => {
         let self = this;
@@ -53,14 +42,15 @@ class Calendar extends Component {
         });
     };
     init = () => {
+        this.getTodoList();
         let date = new Date();
         this.dateText = this.showTitle(date);
         this.days = this.getDays(date);
         this.firstDayOfWeek = this.getfirstDayOfWeek();
         this.today = this.getToday();
-        this.dateline = date.getFullYear() + '-' + this.appendZero(date.getMonth()+1) + '-';
-        this.datelineNow = new Date().getFullYear() + '-' + this.appendZero(new Date().getMonth()+1) + '-';
-        this.dateline == this.datelineNow ? this.getCalendar(new Date().getDate()-1) : this.getCalendar(0);
+        this.dateline = date.getFullYear() + '-' + appendZero(date.getMonth()+1) + '-';
+        this.datelineNow = new Date().getFullYear() + '-' + appendZero(new Date().getMonth()+1) + '-';
+        this.dateline == this.datelineNow ? this.getCalendar(new Date().getDate()-1, this.dateline + new Date().getDate() ) : this.getCalendar(0, this.dateline + '01');
     };
     showTitle = (date) => {
         date.setMonth(date.getMonth() + this.monthIndex);
@@ -82,7 +72,7 @@ class Calendar extends Component {
         let date = new Date();
         return date.getDate();
     };
-    getCalendar = (index) => {
+    getCalendar = (index, dateNow) => {
         let arr = [];
         for (let i = 0; i < this.firstDayOfWeek; i++) {
             arr.push(
@@ -93,7 +83,7 @@ class Calendar extends Component {
 			arr.push(
                 <li 
                     key={ this.firstDayOfWeek + i } 
-                    data-dateline={ this.dateline + this.appendZero(i+1) }
+                    data-dateline={ this.dateline + appendZero(i+1) }
                     data-index={ i }
                     className={ i == index ? calendarStyle.daysActive + ' ' + calendarStyle.days : calendarStyle.days }
                     onClick={ this.chooseDay }
@@ -108,20 +98,19 @@ class Calendar extends Component {
                     </span>
                     <b
                         className={ calendarStyle.marks }
-                        data-dateline={ this.dateline + this.appendZero(i+1) }
+                        data-dateline={ this.dateline + appendZero(i+1) }
                     ></b>
                 </li>
             );
         }
-        this.props.getCalendar(arr);
-        this.getTodoList();
+        this.props.getCalendar(arr, dateNow);
     };
     addMark = (nextProps) => {
         let { datas } = nextProps;
         let marksArr = document.getElementsByClassName(calendarStyle.marks);
         Array.from(marksArr).forEach((e, i) => {
             let dateline = e.dataset.dataline;
-            if (datas.some((item) => { return item.dateline == this.dateline + this.appendZero(i+1) })) {
+            if (datas.some((item) => { return item.dateline == this.dateline +  appendZero(i+1) })) {
                 e.classList.add(calendarStyle.showIt);
             } else {
                 e.classList.remove(calendarStyle.showIt);
@@ -138,7 +127,8 @@ class Calendar extends Component {
     };
     chooseDay = (ev) => {
         let index = ev.currentTarget.dataset.index;
-        this.getCalendar(index);
+        let choosedDate = ev.currentTarget.dataset.dateline;
+        this.getCalendar(index, choosedDate);
     }; 
     render() {
         return (
@@ -167,4 +157,4 @@ class Calendar extends Component {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default Calendar;

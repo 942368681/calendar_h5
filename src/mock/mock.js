@@ -5,12 +5,17 @@ Mock.setup({
 });
 
 Mock.mock('http://data/todoList', {
-    'list|2-10': [{
+    'list|8-15': [{
+        'todoID|+1': 0,
         'dateline': '@date("2018-04-dd")',
-        'startDate': '@date("2018-04-dd HH:mm:ss")',
-        'endDate': '@date("2018-04-dd HH:mm:ss")',
-        'workName': '@ctitle()',
+        'startDate': '@date("2018-04-dd")',
+        'endDate': '@date("2018-04-dd")',
+        'timeStart': '@date(HH:mm)',
+        'timeEnd': '@date(HH:mm)',
+        'textVal': '@ctitle()',
         'creater': '@cname()',
-        'remark': '@ctitle(30)'
+        'remarkVal': '@ctitle(30)',
+        'remind': "日程开始时",
+        'repeat': "不重复"
     }]
 });

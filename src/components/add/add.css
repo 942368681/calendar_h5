@@ -4,6 +4,7 @@
 .content {
     width: 100%;
     background: #fff;
+    margin-top: 0.2rem;
 }
 textarea {
     border: 0;
@@ -16,6 +17,7 @@ textarea {
     width: 100%;
     height: 2.4rem;
     box-sizing: border-box;
+    word-break: break-all;
 }
 .allDay {
     width: 100%;
@@ -42,6 +44,7 @@ textarea {
     height: 2.4rem;
     display: flex;
     align-items: center;
+    margin-bottom: 0.2rem;
 }
 .datePicker>div:nth-last-of-type(1) {
     width: 50%;
@@ -52,8 +55,55 @@ textarea {
 .datePicker>div>div {
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 0.2rem;
+}
+.datePicker>div>div>p {
+    color: #9e9e9e;
+}
+.datePicker>div>div>p:nth-of-type(3) {
+    color: #000;
+}
+.datePicker>div>div:nth-of-type(1) {
+    box-sizing: border-box;
+    border-right: 0.02rem solid #f1f1f1;
 }
 .datePicker>div:nth-last-of-type(2) {
     width: 50%;
+    height: 2rem;
+}
+.toastPicker {
+    background: #fff;
+    margin-bottom: 0.2rem;
+}
+.toastPicker>div {
+    width: 100%;
+    height: 0.8rem;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 0.2rem;
+    justify-content: space-between;
+}
+.toastPickerR {
+    height: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+.toastPicker>div span {
+    color: #9e9e9e;
+    margin-right: 0.2rem;
+}
+.toastPicker>div i {
+    color: #d7d7d7;
+}
+.toastPicker>div:nth-of-type(1) {
+    border-bottom: 0.02rem solid #f1f1f1;
+}
+.remarkCon {
+    width: 100%;
+    background: #fff;
     height: 2rem;
 }

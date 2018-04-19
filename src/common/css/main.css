@@ -44,7 +44,7 @@ body{
 .am-navbar-left span {
     font-size: 0.36rem;
 }
-.am-navbar-right a{
+.am-navbar-right a,.am-navbar-right span{
     height: 0.88rem;
     line-height: 0.88rem;
     width: 0.64rem;

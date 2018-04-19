@@ -13,9 +13,9 @@ import './common/fonts/iconfont.css';
 import './common/css/main.css';
 
 import HomePage from './components/homePage/homePage';
-import Add from './components/add/add';
+import VisibleAdd from './containers/visibleAdd';
 import Set from './components/set/set';
-import Detail from './components/detail/detail';
+import VisibleDetail from './containers/visibleDetail';
 
 const store = createStore(rootReducer);
 
@@ -32,9 +32,9 @@ class App extends Component {
                 <Router>
                     <div>
                         <Route exact path = "/" component = { HomePage }></Route>
-                        <Route path = "/add" component = { Add }></Route>
+                        <Route path = "/add" component = { VisibleAdd }></Route>
                         <Route path = "/set" component = { Set }></Route>
-                        <Route path = "/detail" component = { Detail }></Route>
+                        <Route path = "/detail" component = { VisibleDetail }></Route>
                     </div>
                 </Router>
             </Provider>

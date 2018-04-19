@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import { NavBar } from 'antd-mobile';
 import '../../mock/mock';
-import Calendar from './calendar/calendar';
-import TodoList from './todoList/todoList';
+import VisibleCalendar from '../../containers/visibleCalendar';
+import VisibleTodoList from '../../containers/visibleTodoList';
 
 import homePageStyle from './homePage.css';
 import calendarStyle from './calendar/calendar.css';
@@ -87,8 +87,8 @@ class HomePage extends Component {
                         日程
                     </NavBar>
                 </div>
-                <Calendar />
-                <TodoList />
+                <VisibleCalendar />
+                <VisibleTodoList />
             </div>
         );
     };
