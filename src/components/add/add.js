@@ -28,7 +28,14 @@ class Add extends Component {
         ];
     };
     goBack = () => {
-        this.props.history.goBack();
+        if (this.props.location.state) {
+            this.props.history.replace({
+                pathname: '/detail',
+                state: { id: this.props.location.state.id }
+            })
+        } else {
+            this.props.history.goBack();
+        }
     };
     complete = () => {
         /* 调用添加日程接口 */
@@ -53,7 +60,7 @@ class Add extends Component {
                         rightContent={[<span key="1" className={ addStyle.complete } onClick={ this.complete }>完成</span>]}
                         onLeftClick = { this.goBack }
                     >
-                        添加日程
+                        { this.props.location.state ? "编辑日程" : "添加日程" }
                     </NavBar>
                 </div>
                 <div className={ addStyle.content }>
@@ -105,7 +112,7 @@ class Add extends Component {
                             onOk={ (index) => {
                                 this.props.changeAddPage({
                                     ...this.props.addState, 
-                                    remindData:this.remindData[index]})
+                                    remindData: this.remindData[index]})
                                 } 
                             }
                         >
@@ -124,7 +131,7 @@ class Add extends Component {
                             onOk={ (index) => {
                                 this.props.changeAddPage({
                                     ...this.props.addState, 
-                                    repeatData:this.repeatData[index]})
+                                    repeatData: this.repeatData[index]})
                                 } 
                             }
                         >

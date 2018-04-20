@@ -13,3 +13,8 @@ export const changeAddPage = addState => ({
     type: 'CHANGE_ADD',
     addState
 });
+
+export const changeVisible = visible => ({
+    type: 'CHANGE_VISIBLE',
+    visible
+});

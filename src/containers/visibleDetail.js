@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
-import { getData } from '../actions';
+import { changeVisible, changeAddPage } from '../actions';
 import Detail from '../components/detail/detail';
 
-const mapStateToProps = state => ({
-    datas: state.datas
+const mapStateToProps = (state, ownProps) => ({
+    datas: state.datas.filter(e => e.todoID == ownProps.location.state.id),
+    visible: state.visible
 });
 const mapDispatchToProps = dispatch => ({
-    getData: dataArr => dispatch(getData(dataArr))
+    changeVisible: visible => dispatch(changeVisible(visible)),
+    changeAddPage: addState => dispatch(changeAddPage(addState))
 });
 
 export default connect(

@@ -6,7 +6,6 @@ const filterList = (datasArr, dateline) => {
     let result = datasArr.filter(e => e.dateline == dateline);
     return result;
 };
-
 const mapStateToProps = state => ({
     datas: filterList(state.datas, state.dateChoosed)
 });

@@ -47,7 +47,7 @@ body{
 .am-navbar-right a,.am-navbar-right span{
     height: 0.88rem;
     line-height: 0.88rem;
-    width: 0.64rem;
+    min-width: 0.64rem;
     color: #fff;
     text-align: center;
     font-size: 0.36rem;

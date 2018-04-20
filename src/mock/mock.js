@@ -15,7 +15,7 @@ Mock.mock('http://data/todoList', {
         'textVal': '@ctitle()',
         'creater': '@cname()',
         'remarkVal': '@ctitle(30)',
-        'remind': "日程开始时",
-        'repeat': "不重复"
+        'remind': { "value": 1, "label": "日程开始时"},
+        'repeat': { "value": 0, "label": "不重复"}
     }]
 });
