@@ -22,13 +22,12 @@ class Detail extends Component {
             /* 在此调用删除日程接口，并返回当月修改后的所有数据，存入store */
             this.goBack();
         } else {
-            console.log(this.props.datas,this.props.location.state);
             let { textVal, startDate, endDate, remind, repeat, remarkVal, timeStart, timeEnd } = this.props.datas[0];
             let prevAddState = {
                 textVal,
                 checked: /周/.test(timeStart),
-                dateStart: new Date(startDate.split('-')[0], Number(startDate.split('-')[1])-1, startDate.split('-')[2], appendZero(timeStart.split(':')[0]), appendZero(timeStart.split(':')[1])),
-                dateEnd: new Date(endDate.split('-')[0], Number(endDate.split('-')[1])-1, endDate.split('-')[2], appendZero(timeEnd.split(':')[0]), appendZero(timeEnd.split(':')[1])),
+                dateStart: new Date(startDate.split('-')[0], Number(startDate.split('-')[1])-1, startDate.split('-')[2], /周/.test(timeStart) ? "00" : appendZero(timeStart.split(':')[0]), /周/.test(timeStart) ? "00" : appendZero(timeStart.split(':')[1])),
+                dateEnd: new Date(endDate.split('-')[0], Number(endDate.split('-')[1])-1, endDate.split('-')[2], /周/.test(timeEnd) ? "00" : appendZero(timeEnd.split(':')[0]), /周/.test(timeEnd) ? "00" : appendZero(timeEnd.split(':')[1])),
                 remindData: remind,
                 repeatData: repeat,
                 remarkVal: remarkVal

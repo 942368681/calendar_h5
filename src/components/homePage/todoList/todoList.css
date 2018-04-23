@@ -2,6 +2,7 @@
     background: #fff;
     width: 100%;
     height: 8rem;
+    position: relative;
 }
 .list {
     padding-left: 0.2rem;
@@ -47,4 +48,7 @@
     text-overflow:ellipsis;
     white-space: nowrap;
     width: 6rem;
+}
+.empty {
+    width: 100%;
 }

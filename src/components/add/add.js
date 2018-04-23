@@ -38,8 +38,25 @@ class Add extends Component {
         }
     };
     complete = () => {
-        /* 调用添加日程接口 */
-        console.log(this.props.addState);
+        if (this.props.location.state) {
+            /* 调用修改日程接口 */
+            this.props.datas.forEach((e) => {
+                if (e.todoID == this.props.location.state.id) {
+                    e.endDate = this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1);
+                    e.remarkVal = this.props.addState.remarkVal;
+                    e.remind = this.props.addState.remindData;
+                    e.repeat = this.props.addState.repeatData;
+                    e.startDate = this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1);
+                    e.textVal = this.props.addState.textVal;
+                    e.timeEnd = this.props.addState.timeEndShow;
+                    e.timeStart = this.props.addState.timeStartShow;
+                }
+            });
+            this.props.getData(this.props.datas);
+        } else {
+            /* 调用添加日程接口 */
+            console.log(this.props.addState);
+        }
         this.goBack();
     };
     textInput = (type) => {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changeAddPage } from '../actions';
+import { changeAddPage, getData } from '../actions';
 import { appendZero } from '../common/js/common';
 import Add from '../components/add/add';
 
@@ -16,10 +16,12 @@ const dateHandle = (obj) => {
     };
 };
 const mapStateToProps = state => ({
-    addState: dateHandle(state.addState)
+    addState: dateHandle(state.addState),
+    datas: state.datas
 });
 const mapDispatchToProps = dispatch => ({
-    changeAddPage: addState => dispatch(changeAddPage(addState))
+    changeAddPage: addState => dispatch(changeAddPage(addState)),
+    getData: dataArr => dispatch(getData(dataArr))
 });
 
 export default connect(

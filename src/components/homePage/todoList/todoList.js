@@ -18,7 +18,6 @@ class TodoList extends Component {
     };
     init = (nextProps) => {
         let { datas } = nextProps;
-        console.log(datas)
         let arr = [];
         datas.forEach((e, i) => {
             arr.push(
@@ -77,11 +76,18 @@ class TodoList extends Component {
         console.log('detail')
     };
     render() {
+        let domElem = this.listArr.length ? 
+        <ul className={ todoListStyle.list }>
+            { this.listArr }
+        </ul> : 
+        <div className={ todoListStyle.empty }>
+            <img src={ require("../../../common/img/empty.png") } />
+            <p>暂无日程</p>
+        </div>;
+
         return (
             <div id = "todoList" className={ todoListStyle.content }>
-                <ul className={ todoListStyle.list }>
-                    { this.listArr }
-                </ul>
+                { domElem }
 	        </div>
         );
     };
