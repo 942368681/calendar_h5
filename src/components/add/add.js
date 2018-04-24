@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { NavBar, Switch, DatePicker, Picker } from 'antd-mobile';
+import { NavBar, Switch, DatePicker, Picker, Toast } from 'antd-mobile';
 import addStyle from './add.css';
 
 class Add extends Component {
@@ -38,6 +38,10 @@ class Add extends Component {
         }
     };
     complete = () => {
+        if (this.props.addState.textVal == "") {
+            Toast.info('请输入日程主题', 1.5);
+            return;
+        }
         if (this.props.location.state) {
             /* 调用修改日程接口 */
             this.props.datas.forEach((e) => {

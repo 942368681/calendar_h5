@@ -36,7 +36,7 @@ class TodoList extends Component {
                         }
                     ]}
                 >
-                    <li className={ todoListStyle.listItem } onClick={ this.checkDetail }>
+                    <li className={ todoListStyle.listItem }>
                         <Link to={{
                             pathname: '/detail',
                             state: { id: e.todoID }
@@ -72,9 +72,6 @@ class TodoList extends Component {
     delete = () => {
         this.getTodoList();
     };
-    checkDetail = () => {
-        console.log('detail')
-    };
     render() {
         let domElem = this.listArr.length ? 
         (
@@ -85,7 +82,7 @@ class TodoList extends Component {
         (
             <div className={ todoListStyle.empty }>
                 <img src={ require("../../../common/img/empty.png") } />
-                <p>暂无日程</p>
+                <p>暂时没有日程哦</p>
             </div>
         );
 

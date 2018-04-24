@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { NavBar, Popover } from 'antd-mobile';
+import { NavBar, Popover, Modal } from 'antd-mobile';
 import { appendZero } from '../../common/js/common';
 import detailStyle from './detail.css';
 
 const Item = Popover.Item;
+const alert = Modal.alert;
 
 class Detail extends Component {
     constructor() {
@@ -19,8 +20,11 @@ class Detail extends Component {
     onSelect = (opt) => {
         this.props.changeVisible(false);
         if (opt.props.value == "delete") {
+            alert('确认删除该日程？', '', [
+                { text: '取消' },
+                { text: '确认', onPress: () => this.goBack(), style:{ color: "#F44336" } }
+            ])
             /* 在此调用删除日程接口，并返回当月修改后的所有数据，存入store */
-            this.goBack();
         } else {
             let { textVal, startDate, endDate, remind, repeat, remarkVal, timeStart, timeEnd } = this.props.datas[0];
             let prevAddState = {
