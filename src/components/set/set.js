@@ -24,7 +24,7 @@ class Set extends Component {
                     >
                         设置
                     </NavBar>
-                    <i className={`${setStyle.icon} iconfont icon-enter`}></i>
+                    <i className={`${setStyle.icon} iconfont icon-enter`}>123</i>
                 </div>
             </div>
         );

@@ -77,13 +77,17 @@ class TodoList extends Component {
     };
     render() {
         let domElem = this.listArr.length ? 
-        <ul className={ todoListStyle.list }>
-            { this.listArr }
-        </ul> : 
-        <div className={ todoListStyle.empty }>
-            <img src={ require("../../../common/img/empty.png") } />
-            <p>暂无日程</p>
-        </div>;
+        (
+            <ul className={ todoListStyle.list }>
+                { this.listArr }
+            </ul>
+        ) : 
+        (
+            <div className={ todoListStyle.empty }>
+                <img src={ require("../../../common/img/empty.png") } />
+                <p>暂无日程</p>
+            </div>
+        );
 
         return (
             <div id = "todoList" className={ todoListStyle.content }>
