@@ -18,3 +18,8 @@ export const changeVisible = visible => ({
     type: 'CHANGE_VISIBLE',
     visible
 });
+
+export const changeMonthIndex = rangeNum => ({
+    type: 'CHANGE_MONTHINDEX',
+    rangeNum
+});

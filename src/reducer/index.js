@@ -1,6 +1,7 @@
 import { appendZero } from '../common/js/common';
 
 const initialState = {
+    monthIndex: 0,
     dateChoosed: "",
     datas: [],
     calendar: [],
@@ -46,6 +47,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 visible: action.visible
+            };
+
+        case 'CHANGE_MONTHINDEX':
+            return {
+                ...state,
+                monthIndex: action.rangeNum
             };
 
         default:

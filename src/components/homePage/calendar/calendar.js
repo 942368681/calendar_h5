@@ -11,7 +11,6 @@ class Calendar extends Component {
         this.state = {
             
         };
-        this.monthIndex = 0;
         this.dateText = "";
         this.days = null;
         this.firstDayOfWeek = null;
@@ -20,10 +19,10 @@ class Calendar extends Component {
         this.datelineNow = "";
     };
     componentDidMount = () => {
-        this.init();
+        this.init(this.props.monthIndex);
     };
     componentWillReceiveProps = (nextProps) => {
-        if (nextProps.calendar.length) {
+        if (nextProps.datas.length) {
             this.addMark(nextProps);
         }
     };
@@ -41,19 +40,19 @@ class Calendar extends Component {
             console.log(error);
         });
     };
-    init = () => {
+    init = (rangeNum) => {
         this.getTodoList();
         let date = new Date();
-        this.dateText = this.showTitle(date);
+        this.dateText = this.showTitle(date, rangeNum);
         this.days = this.getDays(date);
-        this.firstDayOfWeek = this.getfirstDayOfWeek();
+        this.firstDayOfWeek = this.getfirstDayOfWeek(rangeNum);
         this.today = this.getToday();
         this.dateline = date.getFullYear() + '-' + appendZero(date.getMonth()+1) + '-';
         this.datelineNow = new Date().getFullYear() + '-' + appendZero(new Date().getMonth()+1) + '-';
         this.dateline == this.datelineNow ? this.getCalendar(new Date().getDate()-1, this.dateline + new Date().getDate() ) : this.getCalendar(0, this.dateline + '01');
     };
-    showTitle = (date) => {
-        date.setMonth(date.getMonth() + this.monthIndex);
+    showTitle = (date, rangeNum) => {
+        date.setMonth(date.getMonth() + rangeNum);
         return date.getFullYear() + '年' + (date.getMonth()+1) + '月';
     };
     getDays = (date) => {
@@ -62,10 +61,10 @@ class Calendar extends Component {
         date.setDate(0);
         return date.getDate();
     };
-    getfirstDayOfWeek = () => {
+    getfirstDayOfWeek = (rangeNum) => {
         let date = new Date();
         date.setDate(1);
-		date.setMonth(date.getMonth() + this.monthIndex);
+		date.setMonth(date.getMonth() + rangeNum);
         return date.getDay();
     };
     getToday = () => {
@@ -118,12 +117,14 @@ class Calendar extends Component {
         });
     };
     changeMonth = (type) => {
+        let rangeNum;
         if (type == 'prev') {
-            this.monthIndex--;
+            rangeNum = this.props.monthIndex - 1;
         } else {
-            this.monthIndex++;
+            rangeNum = this.props.monthIndex + 1;
         }
-        this.init();
+        this.props.changeMonthIndex(rangeNum);
+        this.init(rangeNum);
     };
     chooseDay = (ev) => {
         let index = ev.currentTarget.dataset.index;
