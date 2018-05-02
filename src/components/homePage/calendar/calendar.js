@@ -49,7 +49,7 @@ class Calendar extends Component {
         this.today = this.getToday();
         this.dateline = date.getFullYear() + '-' + appendZero(date.getMonth()+1) + '-';
         this.datelineNow = new Date().getFullYear() + '-' + appendZero(new Date().getMonth()+1) + '-';
-        this.dateline == this.datelineNow ? this.getCalendar(new Date().getDate()-1, this.dateline + new Date().getDate() ) : this.getCalendar(0, this.dateline + '01');
+        this.dateline == this.datelineNow ? this.getCalendar(new Date().getDate()-1, this.dateline + appendZero(new Date().getDate()) ) : this.getCalendar(0, this.dateline + '01');
     };
     showTitle = (date, rangeNum) => {
         date.setMonth(date.getMonth() + rangeNum);
@@ -125,6 +125,8 @@ class Calendar extends Component {
         }
         this.props.changeMonthIndex(rangeNum);
         this.init(rangeNum);
+        /* setTimeout(() => console.log(this.props.monthIndex), 1000); // 1
+        console.log(this.props.monthIndex); // 0 */
     };
     chooseDay = (ev) => {
         let index = ev.currentTarget.dataset.index;

@@ -56,8 +56,11 @@ class Detail extends Component {
                         leftContent={[<span key="0" className="iconfont icon-back"></span>]}
                         rightContent={
                             <Popover
-                                mask
                                 visible={ this.props.visible }
+                                style={{ color: '#F44336' }}
+                                overlayStyle={{ color: '#F44336' }}
+                                contextStyle={{ color: '#F44336' }}
+                                triggerStyle={{ color: '#F44336' }} 
                                 overlay={[
                                     (<Item key="0" value="change"><i className="iconfont icon-send_blog"></i> 编辑</Item>),
                                     (<Item key="1" value="delete"><i className="iconfont icon-delete"></i> 删除</Item>)

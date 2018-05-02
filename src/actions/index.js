@@ -23,3 +23,4 @@ export const changeMonthIndex = rangeNum => ({
     type: 'CHANGE_MONTHINDEX',
     rangeNum
 });
+

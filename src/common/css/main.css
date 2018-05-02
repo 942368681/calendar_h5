@@ -59,3 +59,11 @@ body{
     color: #999;
     font-size: 0.4rem;
 }
+
+/* 详情页popover */
+.am-popover-inner {
+    color: #fff !important;
+}
+.am-popover-inner-wrapper, .am-popover-arrow {
+    background: #48474B !important;
+}

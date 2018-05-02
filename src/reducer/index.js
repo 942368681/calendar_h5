@@ -14,7 +14,8 @@ const initialState = {
         repeatData: { value: 0, label: "不重复" },
         remarkVal: ""
     },
-    visible: false
+    visible: false,
+    n: 0
 };
 
 const reducer = (state = initialState, action) => {
@@ -54,7 +55,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 monthIndex: action.rangeNum
             };
-
+        
         default:
             return state;
     }

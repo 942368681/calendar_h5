@@ -8,7 +8,8 @@ import {
 } from 'react-router-dom';
 
 import rootReducer from './reducer';
-import './common/js/common.js';
+import './common/js/common';
+import './common/js/summer';
 import './common/fonts/iconfont.css';
 import './common/css/main.css';
 
@@ -26,6 +27,15 @@ class App extends Component {
             
         };
     };
+    componentDidMount = () => {
+        summer.on("ready", this.getSummer);
+    };
+    getSummer = () => {
+        /* console.log(summer);
+        summer.toast({
+            msg: "aaa"
+        }); */
+    }
     render() {
         return (
             <Provider store = { store }>
