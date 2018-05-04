@@ -3,6 +3,13 @@ import ReactDOM from 'react-dom';
 import { NavBar } from 'antd-mobile';
 import setStyle from './set.css';
 
+import Swiper from 'react-id-swiper';
+import '../../../node_modules/react-id-swiper/src/styles/css/swiper.css';
+
+const params = {
+    loop: true
+};
+
 class Set extends Component {
     constructor() {
         super();
@@ -24,7 +31,12 @@ class Set extends Component {
                     >
                         设置
                     </NavBar>
-                    <i className={`${setStyle.icon} iconfont icon-enter`}>123</i>
+                </div>
+                <i className={`${setStyle.icon} iconfont icon-enter`}>123</i>
+                <div className={setStyle.swiperBox}>
+                    <Swiper {...params}>
+                        <div className={setStyle.oDIv}>div1</div>
+                    </Swiper>
                 </div>
             </div>
         );

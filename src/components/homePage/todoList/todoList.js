@@ -31,7 +31,7 @@ class TodoList extends Component {
                         },
                         {
                             text: '删除',
-                            onPress: this.delete,
+                            onPress: this.delete.bind(null, e.todoID),
                             style: { backgroundColor: '#F4333C', color: 'white', padding: '0 0.2rem' },
                         }
                     ]}
@@ -69,7 +69,8 @@ class TodoList extends Component {
             console.log(error);
         });
     };
-    delete = () => {
+    delete = (todoID) => {
+        console.log('要删除的此条日程的ID： '+ todoID);
         this.getTodoList();
     };
     render() {

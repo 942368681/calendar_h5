@@ -5,6 +5,7 @@ const initialState = {
     dateChoosed: "",
     datas: [],
     calendar: [],
+    // 添加日程页面所用状态
     addState: {
         textVal: "",
         checked: false,
@@ -14,8 +15,8 @@ const initialState = {
         repeatData: { value: 0, label: "不重复" },
         remarkVal: ""
     },
-    visible: false,
-    n: 0
+    // 控制详情页面Popover显隐（默认隐藏）
+    visible: false
 };
 
 const reducer = (state = initialState, action) => {

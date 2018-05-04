@@ -17,15 +17,18 @@ class Detail extends Component {
     goBack = () => {
         this.props.history.goBack();
     };
+    /* Popover操作 */
     onSelect = (opt) => {
         this.props.changeVisible(false);
         if (opt.props.value == "delete") {
+            /* 点选删除 */
             alert('确认删除该日程？', '', [
                 { text: '取消' },
                 { text: '确认', onPress: () => this.goBack(), style:{ color: "#F44336" } }
             ])
             /* 在此调用删除日程接口，并返回当月修改后的所有数据，存入store */
         } else {
+            /* 点选编辑，跳转编辑日程页面 */
             let { textVal, startDate, endDate, remind, repeat, remarkVal, timeStart, timeEnd } = this.props.datas[0];
             let prevAddState = {
                 textVal,
@@ -57,10 +60,6 @@ class Detail extends Component {
                         rightContent={
                             <Popover
                                 visible={ this.props.visible }
-                                style={{ color: '#F44336' }}
-                                overlayStyle={{ color: '#F44336' }}
-                                contextStyle={{ color: '#F44336' }}
-                                triggerStyle={{ color: '#F44336' }} 
                                 overlay={[
                                     (<Item key="0" value="change"><i className="iconfont icon-send_blog"></i> 编辑</Item>),
                                     (<Item key="1" value="delete"><i className="iconfont icon-delete"></i> 删除</Item>)

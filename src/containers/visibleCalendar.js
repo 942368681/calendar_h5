@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
     datas: state.datas,
     monthIndex: state.monthIndex
 });
+
 const mapDispatchToProps = dispatch => ({
     getCalendar: (calendarArr, dateNow) => dispatch(getCalendar(calendarArr, dateNow)),
     getData: dataArr => dispatch(getData(dataArr)),

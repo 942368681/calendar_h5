@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Toast } from 'antd-mobile';
 import axios from 'axios';
+/* import Swiper from 'react-id-swiper';
+import '../../../../node_modules/react-id-swiper/src/styles/css/swiper.css'; */
 import { appendZero } from '../../../common/js/common';
 import calendarStyle from './calendar.css';
 
@@ -34,6 +36,7 @@ class Calendar extends Component {
         axios.get('http://data/todoList')
         .then((response) => {
             Toast.hide();
+            console.log(response.data.list);
             self.props.getData(response.data.list);
         })
         .catch((error) => {
@@ -49,7 +52,9 @@ class Calendar extends Component {
         this.today = this.getToday();
         this.dateline = date.getFullYear() + '-' + appendZero(date.getMonth()+1) + '-';
         this.datelineNow = new Date().getFullYear() + '-' + appendZero(new Date().getMonth()+1) + '-';
-        this.dateline == this.datelineNow ? this.getCalendar(new Date().getDate()-1, this.dateline + appendZero(new Date().getDate()) ) : this.getCalendar(0, this.dateline + '01');
+        this.dateline == this.datelineNow ? 
+        this.getCalendar(new Date().getDate()-1, this.dateline + appendZero(new Date().getDate()) ) : 
+        this.getCalendar(0, this.dateline + '01');
     };
     showTitle = (date, rangeNum) => {
         date.setMonth(date.getMonth() + rangeNum);
@@ -109,7 +114,7 @@ class Calendar extends Component {
         let marksArr = document.getElementsByClassName(calendarStyle.marks);
         Array.from(marksArr).forEach((e, i) => {
             let dateline = e.dataset.dataline;
-            if (datas.some((item) => { return item.dateline == this.dateline +  appendZero(i+1) })) {
+            if (datas.some((item) => item.dateline == this.dateline +  appendZero(i+1) )) {
                 e.classList.add(calendarStyle.showIt);
             } else {
                 e.classList.remove(calendarStyle.showIt);
@@ -125,8 +130,6 @@ class Calendar extends Component {
         }
         this.props.changeMonthIndex(rangeNum);
         this.init(rangeNum);
-        /* setTimeout(() => console.log(this.props.monthIndex), 1000); // 1
-        console.log(this.props.monthIndex); // 0 */
     };
     chooseDay = (ev) => {
         let index = ev.currentTarget.dataset.index;
@@ -152,6 +155,13 @@ class Calendar extends Component {
                         <li>六</li>
                     </ol>
                 </div>
+                {/* <div className={ calendarStyle.dateList }>
+                    <Swiper {...this.props.swiperParams}>
+                        <ul className={ calendarStyle.swiperList }>
+                            { this.props.calendar } 
+                        </ul>
+                    </Swiper>
+                </div> */}
                 <div className={ calendarStyle.dateList }>
                     { this.props.calendar }
                 </div>

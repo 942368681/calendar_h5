@@ -13,3 +13,18 @@
 .icon {
     color: red
 }
+
+/* .swiperBox {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 auto;
+    border: 0.02rem solid #000;
+} */
+
+.oDIv {
+    width: 2rem;
+    height: 2rem;
+    background: #999;
+    text-align: center;
+    line-height: 2rem;
+}

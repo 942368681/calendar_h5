@@ -36,15 +36,20 @@
     margin: 0 0.16rem;
 }
 .dateList {
-    width: 100%;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
     overflow: hidden;
     background: #fff;
     position: relative;
     font-size: 0.32rem;
 }
+/* .swiperList {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+} */
 .days {
     width: 0.74rem;
     height: 0.8rem;
