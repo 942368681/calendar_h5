@@ -22,49 +22,49 @@ Mock.mock('http://data/todoList', {
 #### 字段说明及格式
 
 todoID:   
-    说明：日程唯一标识
-    格式：0
-    类型：Number
+    说明：日程唯一标识  
+    格式：0  
+    类型：Number  
 dateline:  
-    说明：创建该日程的日期
-    格式："yyyy-MM-dd"
-    类型：String
+    说明：创建该日程的日期  
+    格式："yyyy-MM-dd"  
+    类型：String  
 startDate:  
-    说明：日程起始日期
-    格式："yyyy-MM-dd"
-    类型：String
+    说明：日程起始日期  
+    格式："yyyy-MM-dd"  
+    类型：String  
 endDate:  
-    说明：日程结束日期
-    格式："yyyy-MM-dd"
-    类型：String
+    说明：日程结束日期  
+    格式："yyyy-MM-dd"  
+    类型：String  
 timeStart  
-    说明：日程起始具体时间
-    格式："HH:mm" 或 "周一"
-    类型：String
+    说明：日程起始具体时间  
+    格式："HH:mm" 或 "周一"  
+    类型：String  
 timeEnd  
-    日程结束具体时间
-    格式："HH:mm" 或 "周二"
-    类型：String
+    日程结束具体时间  
+    格式："HH:mm" 或 "周二"  
+    类型：String  
 textVal  
-    日程内容
-    格式："开会开会开会"
-    类型：String
+    日程内容  
+    格式："开会开会开会"  
+    类型：String  
 creater  
-    创建人
-    格式："张三"
-    类型：String
+    创建人  
+    格式："张三"  
+    类型：String  
 remarkVal  
-    日程备注内容
-    格式："开会开会开会开会开会开会"
-    类型：String
+    日程备注内容  
+    格式："开会开会开会开会开会开会"  
+    类型：String  
 remind  
-    提醒时机
-    格式：{ "value": 1, "label": "日程开始时"}
-    类型：Object
+    提醒时机  
+    格式：{ "value": 1, "label": "日程开始时"}  
+    类型：Object  
 repeat  
-    重复时间段
-    格式：{ "value": 0, "label": "不重复"} 
-    类型：Object
+    重复时间段  
+    格式：{ "value": 0, "label": "不重复"}   
+    类型：Object  
 
 #### remind / repeat表
 ```
