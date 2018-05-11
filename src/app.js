@@ -9,33 +9,16 @@ import {
 
 import rootReducer from './reducer';
 import './common/js/common';
-import './common/js/summer';
 import './common/fonts/iconfont.css';
 import './common/css/main.css';
 
 import HomePage from './components/homePage/homePage';
 import VisibleAdd from './containers/visibleAdd';
-import Set from './components/set/set';
 import VisibleDetail from './containers/visibleDetail';
 
 const store = createStore(rootReducer);
 
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-            
-        };
-    };
-    componentDidMount = () => {
-        summer.on("ready", this.getSummer);
-    };
-    getSummer = () => {
-        /* console.log(summer);
-        summer.toast({
-            msg: "aaa"
-        }); */
-    }
     render() {
         return (
             <Provider store = { store }>
@@ -43,7 +26,6 @@ class App extends Component {
                     <div>
                         <Route exact path = "/" component = { HomePage }></Route>
                         <Route path = "/add" component = { VisibleAdd }></Route>
-                        <Route path = "/set" component = { Set }></Route>
                         <Route path = "/detail" component = { VisibleDetail }></Route>
                     </div>
                 </Router>

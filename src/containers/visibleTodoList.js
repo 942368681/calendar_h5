@@ -7,6 +7,7 @@ const filterList = (datasArr, dateline) => {
     return result;
 };
 const mapStateToProps = state => ({
+    allDatas: state.datas,
     datas: filterList(state.datas, state.dateChoosed)
 });
 const mapDispatchToProps = dispatch => ({

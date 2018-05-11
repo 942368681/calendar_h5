@@ -24,3 +24,7 @@ export const changeMonthIndex = rangeNum => ({
     rangeNum
 });
 
+export const refreshData = bool => ({
+    type: 'REFRESH_DATA',
+    bool
+});

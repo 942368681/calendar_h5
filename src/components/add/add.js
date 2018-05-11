@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { NavBar, Switch, DatePicker, Picker, Toast } from 'antd-mobile';
+import { moli } from '../../common/js/common';
 import addStyle from './add.css';
 
 class Add extends Component {
@@ -9,23 +10,6 @@ class Add extends Component {
         this.state = {
             
         };
-        this.remindData = [
-            { value: 0, label: "无" },
-            { value: 1, label: "日程开始时" },
-            { value: 2, label: "提前五分钟" },
-            { value: 3, label: "提前15分钟" },
-            { value: 4, label: "提前30分钟" },
-            { value: 5, label: "提前1小时" },
-            { value: 6, label: "提前1天" }
-        ];
-        this.repeatData = [
-            { value: 0, label: "不重复" },
-            { value: 1, label: "每天" },
-            { value: 2, label: "每周" },
-            { value: 3, label: "每两周" },
-            { value: 4, label: "每月" },
-            { value: 5, label: "每年" }
-        ];
     };
     goBack = () => {
         if (this.props.location.state) {
@@ -42,26 +26,85 @@ class Add extends Component {
             Toast.info('请输入日程主题', 1.5);
             return;
         }
+        let self = this;
         if (this.props.location.state) {
             /* 调用修改日程接口 */
-            this.props.datas.forEach((e) => {
-                if (e.todoID == this.props.location.state.id) {
-                    e.endDate = this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1);
-                    e.remarkVal = this.props.addState.remarkVal;
-                    e.remind = this.props.addState.remindData;
-                    e.repeat = this.props.addState.repeatData;
-                    e.startDate = this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1);
-                    e.textVal = this.props.addState.textVal;
-                    e.timeEnd = this.props.addState.timeEndShow;
-                    e.timeStart = this.props.addState.timeStartShow;
+            let param = {
+                "id": this.props.location.state.id,
+                "title": this.props.addState.textVal,
+                "remark": this.props.addState.remarkVal,
+                "wholeDay": this.props.addState.checked ? 1 : 0,
+                "remindType": this.props.addState.remindData,
+                "repeatType": this.props.addState.repeatData,
+                "startDate": this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1),
+                "endDate": this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1),
+                "startTime": this.props.addState.timeStartShow,
+                "endTime": this.props.addState.timeEndShow
+            };
+            moli.ajaxRequest({
+                type: 'post',
+                url: 'schedule/update',
+                loadingTxt: '',
+                param: param
+            }, (res) => {
+                if (res.flag == 0) {
+                    Toast.success('日程修改成功', 1, () => { self.goBack() });
+                    // 修改本地数据
+                    self.props.datas.forEach((e) => {
+                        if (e.id == self.props.location.state.id) {
+                            e.endDate = self.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, self.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1);
+                            e.startDate = self.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, self.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1);
+                            e.remark = self.props.addState.remarkVal;
+                            e.remindType = self.props.addState.remindData;
+                            e.repeatType = self.props.addState.repeatData;
+                            e.title = self.props.addState.textVal;
+                            e.endTime = self.props.addState.timeEndShow;
+                            e.startTime = self.props.addState.timeStartShow;
+                            e.wholeDay = self.props.addState.checked ? 1 : 0;
+                        }
+                    });
+                    self.props.getData(self.props.datas);
+                    // 重新查询日程
+                    self.props.refreshData(true);
+                } else {
+                    Toast.offline('日程修改失败', 1);
                 }
+            }, (err) => {
+                Toast.offline('日程修改失败', 1);
+                console.log(err);
             });
-            this.props.getData(this.props.datas);
         } else {
             /* 调用添加日程接口 */
             console.log(this.props.addState);
+            let param = {
+                "title": this.props.addState.textVal,
+                "remark": this.props.addState.remarkVal,
+                "wholeDay": this.props.addState.checked ? 1 : 0,
+                "remindType": this.props.addState.remindData,
+                "repeatType": this.props.addState.repeatData,
+                "startDate": this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1),
+                "endDate": this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').substr(0, this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '-').length-1),
+                "startTime": this.props.addState.timeStartShow,
+                "endTime": this.props.addState.timeEndShow
+            };
+            moli.ajaxRequest({
+                type: 'post',
+                url: 'schedule/create',
+                loadingTxt: '',
+                param: param
+            }, (res) => {
+                if (res.flag == 0) {
+                    Toast.success('添加成功', 1, () => { self.goBack() });
+                    // 重新查询日程
+                    self.props.refreshData(true);
+                } else {
+                    Toast.offline('添加失败', 1);
+                }
+            }, (err) => {
+                Toast.offline('添加失败', 1);
+                console.log(err);
+            });
         }
-        this.goBack();
     };
     textInput = (type) => {
         let ev = event || window.event;
@@ -96,7 +139,12 @@ class Add extends Component {
                         <span>
                             <Switch
                                 checked={ this.props.addState.checked }
-                                onClick={ () => {this.props.changeAddPage({...this.props.addState, checked: !this.props.addState.checked})} }
+                                onClick={ () => {this.props.changeAddPage({
+                                    ...this.props.addState, 
+                                    checked: !this.props.addState.checked,
+                                    remindData: 1,
+                                    repeatData: 0
+                                })} }
                             />
                         </span>
                     </div>
@@ -127,18 +175,18 @@ class Add extends Component {
                     <div>
                         <div>提醒</div>
                         <Picker
-                            data={ this.remindData }
+                            data={ this.props.remindData }
                             cols={1}
-                            value={ [this.props.addState.remindData.value] }
+                            value={ [this.props.addState.remindData] }
                             onOk={ (index) => {
                                 this.props.changeAddPage({
                                     ...this.props.addState, 
-                                    remindData: this.remindData[index]})
+                                    remindData: index[0]})
                                 } 
                             }
                         >
                             <div className={ addStyle.toastPickerR }>
-                                <span>{ this.props.addState.remindData.label }</span>
+                                <span>{ this.props.remindData[this.props.addState.remindData].label }</span>
                                 <i className="iconfont icon-enter"></i>
                             </div>
                         </Picker>
@@ -146,18 +194,18 @@ class Add extends Component {
                     <div>
                         <div>重复</div>
                         <Picker
-                            data={ this.repeatData }
+                            data={ this.props.repeatData }
                             cols={1}
-                            value={ [this.props.addState.repeatData.value] }
+                            value={ [this.props.addState.repeatData] }
                             onOk={ (index) => {
                                 this.props.changeAddPage({
                                     ...this.props.addState, 
-                                    repeatData: this.repeatData[index]})
+                                    repeatData: index[0]})
                                 } 
                             }
                         >
                             <div className={ addStyle.toastPickerR }>
-                                <span>{ this.props.addState.repeatData.label }</span>
+                                <span>{ this.props.repeatData[this.props.addState.repeatData].label }</span>
                                 <i className="iconfont icon-enter"></i>
                             </div>
                         </Picker>

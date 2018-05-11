@@ -31,7 +31,6 @@
     },
     "dependencies": {
         "antd-mobile": "^2.1.8",
-        "axios": "^0.18.0",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
         "react-id-swiper": "^1.6.2",

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changeAddPage, getData } from '../actions';
+import { changeAddPage, getData, refreshData } from '../actions';
 import { appendZero } from '../common/js/common';
 import Add from '../components/add/add';
 
@@ -15,13 +15,18 @@ const dateHandle = (obj) => {
         timeEndShow: obj.checked ? "周" + dayArr[de.getDay()] : appendZero(de.getHours()) + ':' + appendZero(de.getMinutes())
     };
 };
+
 const mapStateToProps = state => ({
     addState: dateHandle(state.addState),
-    datas: state.datas
+    datas: state.datas,
+    dateChoosed: state.dateChoosed,
+    remindData: state.addState.checked ? state.remindData.allDay : state.remindData.normal,
+    repeatData: state.repeatData
 });
 const mapDispatchToProps = dispatch => ({
     changeAddPage: addState => dispatch(changeAddPage(addState)),
-    getData: dataArr => dispatch(getData(dataArr))
+    getData: dataArr => dispatch(getData(dataArr)),
+    refreshData: bool => dispatch(refreshData(bool))
 });
 
 export default connect(

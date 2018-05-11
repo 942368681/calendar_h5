@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Toast } from 'antd-mobile';
-import axios from 'axios';
+import '../../../common/js/summer';
 /* import Swiper from 'react-id-swiper';
 import '../../../../node_modules/react-id-swiper/src/styles/css/swiper.css'; */
-import { appendZero } from '../../../common/js/common';
+import { appendZero, moli } from '../../../common/js/common';
 import calendarStyle from './calendar.css';
 
 class Calendar extends Component {
@@ -21,30 +21,42 @@ class Calendar extends Component {
         this.datelineNow = "";
     };
     componentDidMount = () => {
+        // 初始化日历组件
         this.init(this.props.monthIndex);
+        // 第一次挂载组件且summerready成功时查询数据
+        summer.on("ready", this.getTodoList.bind(this, this.dateline + '01', this.dateline + String(this.days)));
     };
     componentWillReceiveProps = (nextProps) => {
-        if (nextProps.datas.length) {
-            this.addMark(nextProps);
+        this.addMark(nextProps);
+        if (nextProps.refresh) {
+            this.getTodoList(this.dateline + '01', this.dateline + String(this.days));
         }
     };
-    getTodoList = () => {
+    getTodoList = (dateStart, dateEnd) => {
+        console.log(dateStart + ' - ' + dateEnd);
         let self = this;
-        Toast.loading('Loading...', 5, () => {
-            Toast.offline('请求超时', 1);
+        let param = {
+            "startDate": dateStart,
+            "endDate": dateEnd
+        };
+        moli.ajaxRequest({
+            type: 'post',
+            url: 'schedule/getSchedules',
+            loadingTxt: 'Loading...',
+            param: param
+        }, (res) => {
+            if (res.flag == 0) {
+                self.props.getData(res.data);
+            } else {
+                Toast.offline('服务器开小差了，请稍后再试~', 1);
+            }
+        }, (err) => {
+            Toast.offline('服务器开小差了，请稍后再试~', 1);
+            console.log(err);
         });
-        axios.get('http://data/todoList')
-        .then((response) => {
-            Toast.hide();
-            console.log(response.data.list);
-            self.props.getData(response.data.list);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        this.props.refreshData(false);
     };
     init = (rangeNum) => {
-        this.getTodoList();
         let date = new Date();
         this.dateText = this.showTitle(date, rangeNum);
         this.days = this.getDays(date);
@@ -130,6 +142,7 @@ class Calendar extends Component {
         }
         this.props.changeMonthIndex(rangeNum);
         this.init(rangeNum);
+        this.getTodoList(this.dateline + '01', this.dateline + String(this.days));
     };
     chooseDay = (ev) => {
         let index = ev.currentTarget.dataset.index;

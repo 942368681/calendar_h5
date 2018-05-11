@@ -23,13 +23,12 @@ img{
 }
 body{
     font-size: 0.32rem !important;
-    padding-top: 0.88rem;
+    padding-top: 1.28rem;
     background: #f6f6f6 !important;
 }
 
 /* 头部 */
 .navBar {
-    height: 0.88rem;
     position: fixed;
     top: 0;
     width: 100%;
@@ -40,6 +39,7 @@ body{
 }
 .navBar>.am-navbar {
     height: 0.88rem;
+    padding-top: 0.4rem;
 }
 .am-navbar-left span {
     font-size: 0.36rem;

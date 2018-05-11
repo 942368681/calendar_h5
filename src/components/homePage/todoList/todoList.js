@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { SwipeAction, Toast } from 'antd-mobile';
-import axios from 'axios';
+import { SwipeAction, Toast, Modal } from 'antd-mobile';
+import { moli } from '../../../common/js/common';
 import todoListStyle from './todoList.css';
+
+const alert = Modal.alert;
 
 class TodoList extends Component {
     constructor() {
@@ -26,12 +28,8 @@ class TodoList extends Component {
                     autoClose
                     right={[
                         {
-                            text: '取消',
-                            style: { backgroundColor: '#ddd', color: 'white', padding: '0 0.2rem' },
-                        },
-                        {
                             text: '删除',
-                            onPress: this.delete.bind(null, e.todoID),
+                            onPress: this.delete.bind(null, e.id),
                             style: { backgroundColor: '#F4333C', color: 'white', padding: '0 0.2rem' },
                         }
                     ]}
@@ -39,14 +37,14 @@ class TodoList extends Component {
                     <li className={ todoListStyle.listItem }>
                         <Link to={{
                             pathname: '/detail',
-                            state: { id: e.todoID }
+                            state: { id: e.id }
                         }}>
                             <div className={ todoListStyle.listItemL }>
                                 <span className="iconfont icon-richenganpai"></span>
                             </div>
                             <div className={ todoListStyle.listItemR }>
-                                <p>{ e.startDate + ' ' + e.timeStart + ' - ' + e.endDate + ' ' + e.timeEnd }</p>
-                                <p>{ e.textVal }</p>
+                                <p>{ e.startDate + ' ' + e.startTime + ' - ' + e.endDate + ' ' + e.endTime }</p>
+                                <p>{ e.title }</p>
                             </div>
                         </Link>
                     </li>
@@ -55,23 +53,36 @@ class TodoList extends Component {
         });
         this.listArr = arr;
     };
-    getTodoList = () => {
-        let self = this;
-        Toast.loading('Loading...', 5, () => {
-            Toast.offline('请求超时', 1);
-        });
-        axios.get('http://data/todoList')
-        .then((response) => {
-            Toast.hide();
-            self.props.getData(response.data.list);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+    delete = (id) => {
+        alert('确认删除该日程？', '', [
+            { text: '取消' },
+            { text: '确认', onPress: () => this.confirmDelete(id), style:{ color: "#F44336" } }
+        ]);
     };
-    delete = (todoID) => {
-        console.log('要删除的此条日程的ID： '+ todoID);
-        this.getTodoList();
+    confirmDelete = (id) => {
+        console.log('要删除的此条日程的ID： '+ id);
+        let self = this;
+        let param = {
+            "scheduleId": id
+        };
+        moli.ajaxRequest({
+            type: 'post',
+            url: 'schedule/delete',
+            loadingTxt: '删除中...',
+            param: param
+        }, (res) => {
+            if (res.flag == 0) {
+                Toast.success('删除成功', 1);
+                // 成功后删除本地store数据
+                let dataArr = self.props.allDatas.filter(e => e.id != id);
+                self.props.getData(dataArr);
+            } else {
+                Toast.offline('删除失败', 1);
+            }
+        }, (err) => {
+            Toast.offline('删除失败', 1);
+            console.log(err);
+        });
     };
     render() {
         let domElem = this.listArr.length ? 
