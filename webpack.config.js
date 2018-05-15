@@ -1,9 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
+const uglify = require('uglifyjs-webpack-plugin');
 
 module.exports = {
+    devtool: 'cheap-module-source-map',
     entry: './src/app.js',
     output: {
         path: path.resolve(__dirname, 'dist/'),
@@ -11,6 +13,7 @@ module.exports = {
         publicPath: './'
     },
     plugins: [
+        new uglify(),
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'src/index.html'

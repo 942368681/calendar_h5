@@ -26,6 +26,10 @@ class Add extends Component {
             Toast.info('请输入日程主题', 1.5);
             return;
         }
+        if (!this.checkoutDate()) {
+            Toast.info('日程开始时间不能大于日程结束时间', 1.5);
+            return;
+        }
         let self = this;
         if (this.props.location.state) {
             /* 调用修改日程接口 */
@@ -112,6 +116,17 @@ class Add extends Component {
             this.props.changeAddPage({...this.props.addState, textVal: this.textVal.value});
         } else {
             this.props.changeAddPage({...this.props.addState, remarkVal: this.remarkVal.value});
+        }
+    };
+    checkoutDate = () => {
+        let dateS = this.props.addState.dateStart.getTime();
+        let dateE = this.props.addState.dateEnd.getTime();
+        let dateFormatS = this.props.addState.dateStartShow.replace(/[\u4e00-\u9fa5]/g, '');
+        let dateFormatE = this.props.addState.dateEndShow.replace(/[\u4e00-\u9fa5]/g, '');
+        if (this.props.addState.checked) {
+            return dateFormatS <= dateFormatE ? true : false;
+        } else {
+            return dateS <= dateE ? true : false;
         }
     };
     render() {

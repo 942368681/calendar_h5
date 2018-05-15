@@ -27,9 +27,10 @@ class Calendar extends Component {
         summer.on("ready", this.getTodoList.bind(this, this.dateline + '01', this.dateline + String(this.days)));
     };
     componentWillReceiveProps = (nextProps) => {
-        this.addMark(nextProps);
         if (nextProps.refresh) {
             this.getTodoList(this.dateline + '01', this.dateline + String(this.days));
+        } else {
+            this.addMark(nextProps);
         }
     };
     getTodoList = (dateStart, dateEnd) => {
